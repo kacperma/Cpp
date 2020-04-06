@@ -6,21 +6,16 @@ double zad6(double *tab,int n)
     return 6.9;
 }
 
-void zad7(int *t)
-{
-    return;
-}
 
 int main()
 {
     //1)
-    double arr[100];
-    double *ptr = arr;
+    double (*arr)[100];
 
     //2)
     char *charArr[5][5];
 
-    //3)
+    //---3)
     int n;
     const char *zad3 =new char[n];
     delete [] zad3;
@@ -35,8 +30,7 @@ int main()
     double (*zad6pointer)(double*,int) = &zad6;
 
     //7
-    int n=3;
-    zad7(&n);
+    void f(int*&);
 
 
     return 0;

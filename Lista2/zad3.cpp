@@ -2,7 +2,7 @@
 #include <vector>
 #include <climits>
 
-double operator*(std::vector<double>& self, const std::vector<double>& other)
+double operator*(const std::vector<double>& self, const std::vector<double>& other)
 {
     if(self.size() != other.size()) 
         throw std::logic_error("Wektory nie są tej samej długości\n");

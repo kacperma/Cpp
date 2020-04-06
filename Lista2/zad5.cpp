@@ -24,7 +24,6 @@ int fibo3(int n)
     int temp = round( (1/sqrt(5)) * ( pow((2/( sqrt(5)-1 )),n) - pow((-2/( sqrt(5)+1 )),n)));
     static_fib.push_back(temp);
     return static_fib[n];
-
 }
 
 int main()
