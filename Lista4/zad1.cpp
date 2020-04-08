@@ -6,7 +6,13 @@ private:
     size_t _rozmiar;
     int * _ptab;
 public:
-    Wektor(size_t n) :_rozmiar(0), _ptab(0){}
+    Wektor(size_t n) : _rozmiar(n), _ptab(new int [n]) //new int [n] zaalokuje pamięć i zwróci wskaźnik na początek
+    {
+        for(size_t i=0; i<this->_rozmiar; i++)
+        {
+            this->_ptab[i]=0;
+        }
+    }
     ~Wektor()
     {
         delete [] _ptab;
