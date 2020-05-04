@@ -1,6 +1,18 @@
 #include <iostream>
 #include <cassert>
 
+struct Ogniwo
+{
+    Ogniwo(int n, Ogniwo* p)
+    : _dane(n), _p_nastepny(p)
+    {
+    }
+
+    int _dane;
+    Ogniwo* _p_nastepny;         //<-- rekurencyjna struktura danych
+};
+
+
 class Stos
 {
 public:
@@ -15,66 +27,59 @@ public:
     bool empty() const;                 //czy stos jest pusty?
     size_t size() const;                //bieżący rozmiar(logiczny) stosu
     Stos& operator= (Stos const&);      //operator przypisania
+    friend std::ostream& operator <<(std::ostream& os, const Stos& rhs);
 private:
-    enum{initial_capacity = 1};         //stała wyliczeniowa
-    void _grow();                       //prywatna(!) funkcjia służąca do rozszerzania stosu
-    void _shrink();
-
-    size_t _capacity;                   //rzeczywisty(=fizyczny) rozmiar tablicy
-    size_t _size;                       //pozorny(=logiczny) rozmiar tablicy
-    int* _tab;                          //tablica z danymi
+    Ogniwo* _pSzczyt;                   //wskaźnik na ogniwo leżące na szczycie stosu
+    size_t _size;                       //rozmiar stosu
 };
 
-
 inline Stos::Stos()
-: _capacity(initial_capacity),
-_size(0),
-_tab(new int[initial_capacity])
+: _pSzczyt(0), 
+_size(0)
 {
-    assert(initial_capacity > 0);
 }
 
-inline Stos::~Stos()
+inline bool Stos::empty() const 
 {
-    delete [] _tab;
+    return _pSzczyt == 0;
 }
 
 inline void Stos::push(int n)
 {
-    if(_size == _capacity)              //jeśli nie ma więcej miejsca na stosie...
-        _grow();
-
-    _tab[_size] = n;
+    _pSzczyt = new Ogniwo(n, _pSzczyt);
     _size++;
 }
 
 inline void Stos::pop()
 {
     assert(!empty());
+    Ogniwo* temp = _pSzczyt;
+    _pSzczyt = _pSzczyt -> _p_nastepny;
+    delete temp;
     _size--;
-    if(_capacity == 4 * _size)
-        _shrink();
+}
+
+inline Stos::~Stos()
+{
+    while (!this->empty())
+        this->pop();
 }
 
 inline int Stos::top() const
 {
     assert(!empty());
-    return _tab[_size-1];
+    return _pSzczyt->_dane;
 }
 
 inline int& Stos::top()
 {
     assert(!empty());
-    return _tab[_size-1];
+    return _pSzczyt->_dane;
 }
 
-inline bool Stos::empty() const
-{
-    return _size == 0;
-}
-
-inline size_t Stos::size() const
+inline size_t Stos::size() const 
 {
     return _size;
 }
+
 
