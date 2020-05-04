@@ -3,7 +3,13 @@
 Stos::Stos(const Stos& rhs): 
 _size(rhs._size)
 {
-    _pSzczyt = new Ogniwo(rhs._pSzczyt->_dane,0);
+    if(rhs.empty())
+    {
+        _pSzczyt = new Ogniwo(0,nullptr);
+        return;
+    }
+
+    _pSzczyt = new Ogniwo(rhs._pSzczyt->_dane,nullptr);
 
     Ogniwo* main_stack = _pSzczyt;
     Ogniwo* temp = rhs._pSzczyt;
@@ -12,9 +18,7 @@ _size(rhs._size)
         temp = temp->_p_nastepny;
         _pSzczyt->_p_nastepny = new Ogniwo(temp->_dane,_pSzczyt->_p_nastepny);
         _pSzczyt = _pSzczyt->_p_nastepny;
-
     }
-    _pSzczyt->_p_nastepny = nullptr;
     _pSzczyt = main_stack;
 }
 
@@ -24,20 +28,25 @@ Stos& Stos::operator=(Stos const& rhs)
         return *this;
 
     delete [] this->_pSzczyt;
-    
-    _pSzczyt = new Ogniwo(rhs._pSzczyt->_dane,0);
-
-    Ogniwo* main_stack = _pSzczyt;
-    Ogniwo* temp = rhs._pSzczyt;
-    
-    while(temp->_p_nastepny != nullptr)
+    if(rhs.empty())
     {
-        temp = temp->_p_nastepny;
-        _pSzczyt->_p_nastepny = new Ogniwo(temp->_dane,_pSzczyt->_p_nastepny);
-        _pSzczyt = _pSzczyt->_p_nastepny;
+        _pSzczyt = new Ogniwo(0,nullptr);
     }
-    _pSzczyt->_p_nastepny = nullptr;
-    _pSzczyt = main_stack;
+    else
+    {
+        _pSzczyt = new Ogniwo(rhs._pSzczyt->_dane,nullptr);
+
+        Ogniwo* main_stack = _pSzczyt;
+        Ogniwo* temp = rhs._pSzczyt;
+    
+        while(temp->_p_nastepny != nullptr)
+        {
+            temp = temp->_p_nastepny;
+            _pSzczyt->_p_nastepny = new Ogniwo(temp->_dane,_pSzczyt->_p_nastepny);
+            _pSzczyt = _pSzczyt->_p_nastepny;
+        }
+        _pSzczyt = main_stack;
+    }
     return *this;
 }
 
