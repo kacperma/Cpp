@@ -6,7 +6,8 @@ _size(rhs._size)
 {
     if(rhs.empty())
     {
-        _pSzczyt = new Ogniwo(0,nullptr);
+        _pSzczyt = nullptr;
+        _size = 0;
         return;
     }
 
@@ -31,7 +32,8 @@ Stos& Stos::operator=(Stos const& rhs)
     delete [] this->_pSzczyt;
     if(rhs.empty())
     {
-        _pSzczyt = new Ogniwo(0,nullptr);
+        _pSzczyt = nullptr;
+        _size = 0;
     }
     else
     {
