@@ -29,7 +29,7 @@ Stos& Stos::operator=(Stos const& rhs)
     if(this == &rhs)
         return *this;
 
-    delete [] _pSzczyt;
+    delete _pSzczyt;
     
     if(rhs.empty())
     {
