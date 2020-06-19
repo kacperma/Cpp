@@ -10,7 +10,7 @@ using namespace std;
 
 #define KWADRAT(x) x*x
 //ponizej znajduje sie poprawna definicja
-#define KWADRAT2(x) (x*x)
+#define KWADRAT2(x) ((x)*(x))
 
 
 
@@ -23,6 +23,7 @@ int main()
     cout<<KWADRAT(2)/KWADRAT(2)<<endl;
     // powinno być 1 a dostajemy wynik 4 poniewaz jest to rozwijane do postaci 2*2 / 2*2 co daje nam 2*2
     cout<<KWADRAT2(2)/KWADRAT2(2)<<endl;
+    cout<<KWADRAT2(2+3)<<endl;
     PISZ(3.2);
     PISZ(B);
     return 0;
